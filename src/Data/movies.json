@@ -1,0 +1,23 @@
+[
+  {
+    "id": 0,
+    "title": "Iron Man",
+    "cover": "https://images.moviesanywhere.com/45589cb573be13bb984b078ed3e1cf9e/a0652686-b625-4b41-bdf1-f32c3d9471a6.jpg",
+    "description": "Película centrada en Tony Stark y su asistente de IA, Jarvis.",
+    "aiElements": [
+      {
+        "name": "Jarvis",
+        "moments": {
+          "inicio": "Presentación de Jarvis asistiendo a Tony en su taller.",
+          "fin": "Jarvis demostrando su capacidad para gestionar sistemas críticos."
+        },
+        "comment": "Jarvis es un sistema avanzado de IA que ayuda en el análisis de datos, control de armaduras y la toma de decisiones en tiempo real.",
+        "technology": "IA avanzada, algoritmos de aprendizaje automático y sistemas expertos."
+      }
+    ],
+    "ratings": {
+      "likes": 0,
+      "dislikes": 0
+    }
+  }
+]

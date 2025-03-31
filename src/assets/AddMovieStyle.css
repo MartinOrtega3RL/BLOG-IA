@@ -1,0 +1,31 @@
+form {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background: #333;
+  color: white;
+}
+
+button[type="submit"] {
+  background: #e50914;
+  padding: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+  background: #b20710;
+}

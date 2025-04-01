@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../assets/AddMovieStyle.css";
+import { auth } from "../Firebase/firebaseConfig";
+import { signOut } from "firebase/auth";
 
 // Función asíncrona para buscar el póster usando TMDb
 async function fetchMoviePoster(query) {
@@ -45,12 +47,16 @@ function AddMovieForm({ addMovie }) {
       alert("El título de la película y el nombre de la IA son obligatorios.");
       return;
     }
+    // Busca el póster utilizando TMDb y axios
     const cover = await fetchMoviePoster(title);
+
+    // Obtener datos del usuario autenticado
+    const user = auth.currentUser;
 
     const newMovie = {
       title,
       description,
-      cover, // URL del póster
+      cover,
       aiElements: [
         {
           name: aiName,
@@ -62,6 +68,14 @@ function AddMovieForm({ addMovie }) {
           technology,
         },
       ],
+      // Agregar información del publicador si el usuario está autenticado
+      publisher: user
+        ? {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          }
+        : null,
     };
 
     await addMovie(newMovie);
@@ -74,6 +88,14 @@ function AddMovieForm({ addMovie }) {
     setFin("");
     setComment("");
     setTechnology("");
+
+    // Cerrar sesión del usuario después de publicar la película
+    try {
+      await signOut(auth);
+      console.log("Sesión cerrada exitosamente.");
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   };
 
   return (

@@ -15,6 +15,7 @@ import {
   updateDoc,
   increment,
 } from "firebase/firestore";
+import Login from "./components/Login";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -66,6 +67,7 @@ function App() {
   return (
     <div className="container">
       <h1>Blog de Películas de IA</h1>
+      <Login />
       <AddMovieForm addMovie={addMovie} />
       <MovieList movies={movies} updateRating={updateRating} />
     </div>

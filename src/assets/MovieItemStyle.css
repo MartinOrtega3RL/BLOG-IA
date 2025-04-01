@@ -12,11 +12,15 @@
   transform: scale(1.05);
 }
 
+/* Ajustamos la imagen para que se vea completa sin recortes */
 .cover-image {
+  display: block;
   width: 100%;
-  height: 800px;
-  object-fit: cover;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
   border-radius: 10px;
+  background-color: #000;
 }
 
 .rating-buttons button {
@@ -43,7 +47,7 @@
 }
 
 .movie-description::before {
-  content: "📝 "; /* Icono de nota */
+  content: "📝 ";
   font-size: 1.2rem;
   color: #e50914;
 }
@@ -67,7 +71,33 @@
 }
 
 .ai-element h3::before {
-  content: "⚙️ "; /* Icono de engranaje */
+  content: "⚙️ ";
   font-size: 1.2rem;
   margin-right: 1px;
+}
+
+/* Estilos para la información del publicador */
+.publisher-info {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.publisher-info img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid #e50914;
+}
+
+.publisher-info span {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
 }

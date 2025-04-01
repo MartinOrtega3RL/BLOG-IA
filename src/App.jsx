@@ -4,7 +4,7 @@ import AddMovieForm from "./components/AddMovieForm";
 import initialMovies from "./Data/movies.json";
 import "./App.css";
 
-import { db } from "./Firebase/firebaseConfig";
+import { db } from "./firebase/firebaseConfig.js";
 import {
   collection,
   query,

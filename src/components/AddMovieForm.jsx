@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../assets/AddMovieStyle.css";
-import { auth } from "../Firebase/firebaseConfig";
+import { auth } from "../firebase/firebaseConfig.js";
 import { signOut } from "firebase/auth";
 
 // Función asíncrona para buscar el póster usando TMDb

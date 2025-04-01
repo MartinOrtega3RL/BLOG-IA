@@ -6,31 +6,28 @@ import { auth } from "../Firebase/firebaseConfig.js";
 import { signOut } from "firebase/auth";
 
 // Función asíncrona para buscar el póster usando TMDb
-async function fetchMoviePoster(query) {
-  const apiKey = "a710171045e7640b21b81ab5e0b26378"; // Reemplaza con tu API key de TMDb
-  const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
-    query
-  )}`;
+const fetchMoviePoster = async (movieTitle) => {
+    const apiKey = 'a710171045e7640b21b81ab5e0b26378'; // Reemplaza con tu propia API Key de TMDb
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movieTitle)}&include_adult=false`;
 
-  try {
-    const response = await axios.get(url);
-    const results = response.data.results;
-    if (results && results.length > 0) {
-      const movie = results[0];
-      if (movie.poster_path) {
-        return `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-      }
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        // Filtrar resultados sin imagen
+        const validResults = data.results.filter(movie => movie.poster_path !== null);
+        
+        if (validResults.length > 0) {
+            return `https://image.tmdb.org/t/p/w500${validResults[0].poster_path}`;
+        } else {
+            console.warn("No se encontró una imagen disponible para esta película.");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error al obtener la portada de la película:", error);
+        return null;
     }
-    return `https://via.placeholder.com/800x400?text=${encodeURIComponent(
-      query
-    )}`;
-  } catch (error) {
-    console.error("Error al obtener el póster:", error);
-    return `https://via.placeholder.com/800x400?text=${encodeURIComponent(
-      query
-    )}`;
-  }
-}
+};
 
 function AddMovieForm({ addMovie }) {
   const [title, setTitle] = useState("");

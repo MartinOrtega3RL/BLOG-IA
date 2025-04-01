@@ -1,6 +1,6 @@
 // Login.jsx
 import React, { useState, useEffect } from "react";
-import { auth, provider } from "../Firebase/firebaseConfig"; // Asegúrate de que la ruta sea correcta
+import { auth, provider } from "../Firebase/firebaseConfig.js"; // Asegúrate de que la ruta sea correcta
 import { signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 import "../assets/LoginStyle.css";
 

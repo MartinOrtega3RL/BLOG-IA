@@ -1,3 +1,4 @@
+// AddMovieForm.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import "../assets/AddMovieStyle.css";
@@ -13,12 +14,11 @@ async function fetchMoviePoster(query) {
     const response = await axios.get(url);
     const results = response.data.results;
     if (results && results.length > 0) {
-      const movie = results[0]; // Seleccionamos la primera coincidencia
+      const movie = results[0];
       if (movie.poster_path) {
         return `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
       }
     }
-    // Si no se encuentra imagen, se usa un placeholder
     return `https://via.placeholder.com/800x400?text=${encodeURIComponent(
       query
     )}`;
@@ -45,13 +45,12 @@ function AddMovieForm({ addMovie }) {
       alert("El título de la película y el nombre de la IA son obligatorios.");
       return;
     }
-    // Busca el póster utilizando TMDb y axios
     const cover = await fetchMoviePoster(title);
 
     const newMovie = {
       title,
       description,
-      cover, // Se guarda la URL del póster obtenido
+      cover, // URL del póster
       aiElements: [
         {
           name: aiName,
@@ -65,7 +64,8 @@ function AddMovieForm({ addMovie }) {
       ],
     };
 
-    addMovie(newMovie);
+    await addMovie(newMovie);
+
     // Limpiar formulario
     setTitle("");
     setDescription("");

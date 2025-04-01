@@ -1,3 +1,4 @@
+// MovieItem.jsx
 import React from "react";
 import {
   FaThumbsUp,
@@ -27,16 +28,16 @@ function MovieItem({ movie, updateRating }) {
       {movie.aiElements.map((ai, index) => (
         <div key={index} className="ai-element">
           <h3>Nombre: {ai.name}</h3>
-          <p className="">
+          <p>
             <FaClock /> <strong>Inicio:</strong> {ai.moments.inicio}
           </p>
-          <p className="">
+          <p>
             <FaClock /> <strong>Fin:</strong> {ai.moments.fin}
           </p>
-          <p className="">
+          <p>
             <FaCommentAlt /> <strong>Comentario:</strong> {ai.comment}
           </p>
-          <p className="">
+          <p>
             <FaCogs /> <strong>Tecnología aplicada:</strong> {ai.technology}
           </p>
         </div>

@@ -2,32 +2,36 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../assets/AddMovieStyle.css";
-import { auth } from "../Firebase/firebaseConfig.js";
+import { auth } from "../Firebase/firebaseConfig.js"; // Asegúrate de que la ruta sea correcta
 import { signOut } from "firebase/auth";
 
 // Función asíncrona para buscar el póster usando TMDb
-const fetchMoviePoster = async (movieTitle) => {
-    const apiKey = 'a710171045e7640b21b81ab5e0b26378'; // Reemplaza con tu propia API Key de TMDb
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movieTitle)}&include_adult=false`;
+async function fetchMoviePoster(query) {
+  const apiKey = "a710171045e7640b21b81ab5e0b26378"; // Reemplaza con tu API key de TMDb
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
+    query
+  )}&include_adult=false`;
 
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        
-        // Filtrar resultados sin imagen
-        const validResults = data.results.filter(movie => movie.poster_path !== null);
-        
-        if (validResults.length > 0) {
-            return `https://image.tmdb.org/t/p/w500${validResults[0].poster_path}`;
-        } else {
-            console.warn("No se encontró una imagen disponible para esta película.");
-            return null;
-        }
-    } catch (error) {
-        console.error("Error al obtener la portada de la película:", error);
-        return null;
+  try {
+    const response = await axios.get(url);
+    const results = response.data.results;
+    if (results && results.length > 0) {
+      const movie = results[0]; // Selecciona la primera coincidencia
+      if (movie.poster_path) {
+        return `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+      }
     }
-};
+    // Si no se encuentra imagen, se usa un placeholder
+    return `https://via.placeholder.com/800x400?text=${encodeURIComponent(
+      query
+    )}`;
+  } catch (error) {
+    console.error("Error al obtener el póster:", error);
+    return `https://via.placeholder.com/800x400?text=${encodeURIComponent(
+      query
+    )}`;
+  }
+}
 
 function AddMovieForm({ addMovie }) {
   const [title, setTitle] = useState("");
@@ -44,6 +48,7 @@ function AddMovieForm({ addMovie }) {
       alert("El título de la película y el nombre de la IA son obligatorios.");
       return;
     }
+
     // Busca el póster utilizando TMDb y axios
     const cover = await fetchMoviePoster(title);
 
@@ -53,7 +58,7 @@ function AddMovieForm({ addMovie }) {
     const newMovie = {
       title,
       description,
-      cover,
+      cover, // URL del póster obtenido
       aiElements: [
         {
           name: aiName,
@@ -73,6 +78,7 @@ function AddMovieForm({ addMovie }) {
             photoURL: user.photoURL,
           }
         : null,
+      comments: [], // Inicializa el arreglo de comentarios
     };
 
     await addMovie(newMovie);
